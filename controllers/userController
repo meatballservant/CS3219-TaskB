@@ -1,0 +1,116 @@
+// userController.js
+
+// Import user model
+User = require('../models/userModel');
+
+// Functions that affect userModel
+// menu retrieves all user accounts
+exports.menu = function (req, res) {
+    User.get(function (err, users) { //function gets parameters are err or data
+        if (err) {
+            res.json({
+                status: 404,
+                message: err,
+            });
+        }
+        else {
+            res.json({
+                status: 200,
+                message: "Users retrieved successfully",
+                data: users
+            });
+        }   
+    });
+};
+// new creates a new user account
+exports.new = function (req, res) {
+    var user = new User();
+    user.name = req.body.name ? req.body.name : user.name;
+    user.gender = req.body.gender;
+    user.email = req.body.email;
+    user.phone = req.body.phone;
+// save the user and check for errors
+    user.save(function (err) {
+        if (err) {
+            res.json({
+                status :404,
+                message: err
+            });
+        }
+        else{
+            res.json({
+                status: 200,
+                message: 'New user account created!',
+                data: user
+            });
+        }
+        
+    });
+};
+// for user to view his account details
+exports.view = function (req, res) {
+    User.findById(req.params.user_id, function (err, user) {
+        if (err) {
+            res.json({
+                status: 404,
+                message: err
+            });
+        }
+        else {
+            res.json({
+                status : 200,
+                message: 'User details loading..',
+                data: user
+            });
+        }
+        
+    });
+};
+// update info of a user account
+exports.update = function (req, res) {
+    User.findById(req.params.user_id, function (err, user) {
+        if (err) {
+            res.json({
+                status: 404,
+                message: err
+            });
+        }
+        user.name = req.body.name ? req.body.name : user.name;
+        user.gender = req.body.gender;
+        user.email = req.body.email;
+        user.phone = req.body.phone;
+        // save the user and check for errors
+        user.save(function (err) {
+            if (err) {
+                res.json({
+                    status: 404,
+                    message: err
+                });
+            }
+            else {
+                res.json({
+                    status : 200,
+                    message: 'User info updated!',
+                    data: user
+                });
+            }
+        });
+    });
+};
+// delete a user account
+exports.delete = function (req, res) {
+    User.remove({ _id: req.params.user_id}, function (err, user) {
+        if (err) {
+            res.json({
+                status: 404,
+                message: err
+            });
+        }
+        else {
+            res.json({
+                status : 200,
+                message: 'User deleted!'
+            });
+        }
+    });
+};
