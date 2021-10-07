@@ -1,4 +1,5 @@
 runtime: nodejs14
 
 env_variables:
-  config.url : 'mongodb+srv://meatballservant:meatballservant@meatballcluster.gutzd.mongodb.net/myFirstDatabase?retryWrites=true&w=majority'
+  MONGO_URL : "mongodb+srv://meatballservant:meatballservant@meatballcluster.gutzd.mongodb.net/myFirstDatabase?retryWrites=true&w=majority"
+  PORT : 8000

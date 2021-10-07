@@ -1,20 +1,24 @@
 // token : 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
 // server.js
 
+require('dotenv').config();
 const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
-const config = require('./config/db');
 let router = require('./app/routes/info_routes');
-const { O_APPEND } = require('constants');
+const port = process.env.PORT || 3000;
+if (process.env.NODE_ENV !== 'production') {
+    require('dotenv').config();
+    }
+
 
 // Initialize app
 const app = express();
-const port = 8000;
 
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
 
-mongoose.connect( config.url,
+mongoose.connect(process.env.MONGO_URL,
 {
     useNewUrlParser: true,
 }

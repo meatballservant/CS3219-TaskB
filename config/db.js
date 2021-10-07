@@ -1,1 +1,0 @@
-module.exports = { url : 'mongodb+srv://meatballservant:meatballservant@meatballcluster.gutzd.mongodb.net/myFirstDatabase?retryWrites=true&w=majority'};
